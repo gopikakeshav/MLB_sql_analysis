@@ -120,8 +120,32 @@ ORDER BY teamid, yearid
 ![2.2Output](Images/2.2output.png)
  
  ### 2.3 Return the first year that each team's cumulative spending surpassed 1 billion
-
+```sql
+ With cte_sal AS (
+ SELECT	teamid, yearid,  sum(salary) AS yearly_spend
+ FROM	salaries
+ GROUP BY teamid, yearid
+ ORDER BY teamid
+ )
+,
+cte_cummulative as ( 
+SELECT teamid, yearid, yearly_spend,
+		ROUND(SUM(yearly_spend) OVER (PARTITION BY teamid ORDER BY yearid) / 1000000) as cummulative_spend_mil
+FROM cte_sal
+ )
+ ,
+ cte_billion as (
+ SELECT	teamid, yearid, cummulative_spend_mil,
+		ROW_NUMBER() OVER (PARTITION BY teamid ORDER BY yearid) as row_num
+ FROM	cte_cummulative
+ WHERE	cummulative_spend_mil >= 1000
+ )
  
+ SELECT * from cte_billion
+ WHERE row_num = 1
+ ORDER BY yearid
+```
+![2.3Output](Images/2.3output.png) 
 
 ## 3. CAREER: What does each player's career look like
  1.	For each player, calculate their age at their first (debut) game, their last game, and their career length.
