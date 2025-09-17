@@ -36,4 +36,4 @@ MLB Summary Stats:
 1. University of Texas, University of Southern California, Arizona State University, Stanford University, University of Michigan - Have produced the most players
 2. Team NYA reached its first spend in BILLION in player salaries in the year 2003 while team MIL reached the mark in 2014.
 3. More than 25 players have played Started and Ended their long career (> 10 yrs) with the same team. Todd Lynn with Colarado is an example.
-4. Player Heights have increased over the decade, so have player weights. 
+4. Players' heights have increased over the decades, so have player weights. 
