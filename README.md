@@ -32,6 +32,9 @@ MLB Summary Stats:
 2. Create a summary table that shows for each team, what percent of players bat right, left and both
 3. How have average height and weight at debut game changed over the years, and what's the decade-over-decade difference?
 
+## Analysis:
+Find it [here](SQL_code_analysis.md)
+
 ## Summary Of Findings:
 1. University of Texas, University of Southern California, Arizona State University, Stanford University, University of Michigan - Have produced the most players
 2. Team NYA reached its first spend in BILLION in player salaries in the year 2003 while team MIL reached the mark in 2014.
