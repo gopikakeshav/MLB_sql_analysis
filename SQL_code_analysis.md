@@ -35,7 +35,7 @@ cte_ranking as (
 				FROM cte_school
 				)
 
-SELECT	a.schoolid, b.name_full as School_name, players
+SELECT	b.name_full as School_name, players
 FROM	cte_ranking a LEFT JOIN school_details b 
 		ON a.schoolid = b.schoolid
 WHERE	ranking <=5
@@ -44,7 +44,36 @@ WHERE	ranking <=5
 ![1.2Output](Images/1.2output.png)
 
  
- 3.	For each decade, what were the names of the top 3 schools that produced the most players?
+ ### 1.3 For each decade, what were the names of the top 3 schools that produced the most players?
+
+ ```sql
+WITH cte_decade AS (
+SELECT	yearID, schoolID, playerid,
+        FLOOR(yearid/10)*10 as decade
+FROM	schools
+ORDER BY yearID 
+)
+, 
+cte_player AS (
+SELECT	decade, schoolid, count(playerid) as players
+FROM 	cte_decade
+GROUP BY decade, schoolid
+ORDER BY decade, players desc
+)
+,
+cte_ranking as (
+SELECT	decade, schoolid, players,
+		DENSE_RANK() OVER (PARTITION BY decade ORDER BY players DESC) as ranking
+FROM cte_player
+)
+
+SELECT	decade, ranking, players as mlb_players, b.name_full as School_name
+FROM	cte_ranking a LEFT JOIN school_details b 
+		ON a.schoolid = b.schoolid
+WHERE	ranking <= 3 
+		AND decade > 1970
+```
+![1.3Output](Images/1.3output.png)
 
 ## 2. SALARIES: How much do teams spend on Player salaries
  1.	Return the top 20% of teams in terms of average annual spending
