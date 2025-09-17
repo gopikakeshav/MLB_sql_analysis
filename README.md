@@ -11,6 +11,7 @@ Maven Analytics
 
 ## Business Problem:
 Courtesy: Maven Analytics
+
 Schools:
 1. In each decade, how many schools were there that produced MLB players?
 2. What are the names of the top 5 schools that produced the most players?
