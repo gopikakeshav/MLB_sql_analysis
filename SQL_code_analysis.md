@@ -17,7 +17,7 @@ WHERE	decade > 1900
 GROUP BY decade
 ORDER BY decade;
 ```
-![Output](Images/1.1output.png)
+![1.1Output](Images/1.1output.png)
 
  
  2.	What are the names of the top 5 schools that produced the most players?
