@@ -222,9 +222,19 @@ ORDER BY career desc
 ## 4. SUMMARY STATS: How do player attributes compare
  ### 4.1 Which players have the same birthday?
 ```sql
+With 	cte_dob as (
+SELECT	namegiven, CAST(CONCAT(birthyear, "-", birthmonth, "-", birthday) AS DATE) AS dob
+FROM	Players
+)
 
+SELECT	 dob, COUNT(*) AS players,
+		 GROUP_CONCAT(namegiven SEPARATOR "  |  ") AS Players_sharing_DoB
+FROM	 cte_dob
+WHERE	 dob IS NOT NULL AND year(dob) > 1970
+GROUP BY dob
+ORDER BY players DESC
 ```
-![4.1Output]()
+![4.1Output](Images/4.1output.png)
  ### 4.2 Create a summary table that shows for each team, what percent of players bat right, left and both
 ```sql
 
