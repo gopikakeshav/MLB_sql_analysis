@@ -160,14 +160,65 @@ ORDER BY careerlength DESC;
 ![3.1Output](Images/3.1output.png)
  ### 3.2 What team did each player play on for their starting and ending years?
 ```sql
+-- What team did each player play on for their starting and ending years?
+with cte_first as (
+SELECT	a.playerid, namegiven, year(debut) as first_year, year(finalgame) as last_year,
+		b.teamid as first_team
+FROM	players a LEFT JOIN salaries b
+		ON a.playerid = b.playerid
+        AND YEAR(a.debut) = b.yearid
+),
+cte_last as (
+SELECT	a.playerid, namegiven, year(debut) as first_year, year(finalgame) as last_year,
+		b.teamid as last_team
+FROM	players a LEFT JOIN salaries b
+		ON a.playerid = b.playerid
+        AND YEAR(a.finalgame) = b.yearid
+)
 
+select	 a.namegiven, a.first_year, a.last_year, a.first_team, b.last_team
+FROM	 cte_first a LEFT JOIN cte_last b
+		 ON a.playerid = b.playerid
+         AND a.first_year = b.first_year
+         AND a.last_year = b.last_year
+WHERE	 a.first_year is not null and a.last_year is not null
+		 AND first_team is not null and last_team is not null
+ORDER BY a.first_year asc
 ```
-![3.2Output]()
+![3.2Output](Images/3.2output.png)
  ### 3.3 How many players started and ended on the same team and also played for over a decade?
 ```sql
+with cte_first as (
+SELECT	a.playerid, namegiven, year(debut) as first_year, year(finalgame) as last_year,
+		b.teamid as first_team
+FROM	players a LEFT JOIN salaries b
+		ON a.playerid = b.playerid
+        AND YEAR(a.debut) = b.yearid
+),
+cte_last as (
+SELECT	a.playerid, namegiven, year(debut) as first_year, year(finalgame) as last_year,
+		b.teamid as last_team
+FROM	players a LEFT JOIN salaries b
+		ON a.playerid = b.playerid
+        AND YEAR(a.finalgame) = b.yearid
+),
+cte_team as (
+select	 a.playerid, a.namegiven, a.first_year, a.last_year, a.first_team, b.last_team
+FROM	 cte_first a LEFT JOIN cte_last b
+		 ON a.playerid = b.playerid
+         AND a.first_year = b.first_year
+         AND a.last_year = b.last_year
+WHERE	 a.first_year is not null and a.last_year is not null
+		 AND first_team is not null and last_team is not null
+ORDER BY a.first_year asc
+)
 
+SELECT namegiven, first_year, first_team, last_year, last_team, LAST_YEAR - FIRST_YEAR AS career 
+FROM CTE_TEAM
+WHERE first_team = last_team AND LAST_YEAR - FIRST_YEAR > 10
+ORDER BY career desc
 ```
-![3.3Output]()
+![3.3Output](Images/3.3output.png)
 ## 4. SUMMARY STATS: How do player attributes compare
  ### 4.1 Which players have the same birthday?
 ```sql
