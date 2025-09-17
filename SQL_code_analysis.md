@@ -248,7 +248,15 @@ GROUP BY a.teamid
 ![4.2Output](Images/4.2output.png)
  ### 4.3 How have average height and weight at debut game changed over the years, and what's the decade-over-decade difference?
  ```sql
-
+SELECT	 ROUND(year(debut),-1) AS Decade,  ROUND(avg(height),2) as avg_ht, ROUND(avg(weight),2) avg_wt,
+		 LAG(ROUND(avg(height),2)) OVER (ORDER BY ROUND(year(debut),-1)) as ht_prior,
+         LAG(ROUND(avg(weight),2)) OVER (ORDER BY ROUND(year(debut),-1)) as wt_prior,
+         ROUND(avg(height),2) - LAG(ROUND(avg(height),2)) OVER (ORDER BY ROUND(year(debut),-1))  as ht_diff,
+         ROUND(avg(weight),2) - LAG(ROUND(avg(weight),2)) OVER (ORDER BY ROUND(year(debut),-1))  as wt_diff
+FROM	 players
+WHERE	 ROUND(year(debut),-1) IS NOT NULL
+GROUP BY ROUND(year(debut),-1)
+ORDER BY ROUND(year(debut),-1);
 ```
-![4.3Output]()
+![4.3Output](Images/4.3output.png)
  
