@@ -237,9 +237,15 @@ ORDER BY players DESC
 ![4.1Output](Images/4.1output.png)
  ### 4.2 Create a summary table that shows for each team, what percent of players bat right, left and both
 ```sql
-
+SELECT	teamid, COUNT(a.playerID) as players, 
+		CONCAT(ROUND(SUM(CASE WHEN b.bats = "R" THEN 1 END ) / COUNT(a.playerID)*100),"%") AS R,
+        CONCAT(ROUND(SUM(CASE WHEN b.bats = "L" THEN 1 END ) / COUNT(a.playerID)*100),"%") AS L,
+        CONCAT(ROUND(SUM(CASE WHEN b.bats = "B" THEN 1 END ) / COUNT(a.playerID)*100),"%") AS B
+FROM	salaries a LEFT JOIN players b 
+		ON a.playerid = b.playerid
+GROUP BY a.teamid
 ```
-![4.2Output]()
+![4.2Output](Images/4.2output.png)
  ### 4.3 How have average height and weight at debut game changed over the years, and what's the decade-over-decade difference?
  ```sql
 
