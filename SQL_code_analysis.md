@@ -148,11 +148,40 @@ FROM cte_sal
 ![2.3Output](Images/2.3output.png) 
 
 ## 3. CAREER: What does each player's career look like
- 1.	For each player, calculate their age at their first (debut) game, their last game, and their career length.
- 2.	What team did each player play on for their starting and ending years?
- 3.	How many players started and ended on the same team and also played for over a decade?
+ ### 3.1 For each player, calculate their age at their first (debut) game, their last game, and their career length.
+ ```sql
+SELECT	namegiven, birthyear, year(debut) as firstgame, year(finalgame) as lastgame,
+		year(debut) - birthyear as Age_firstgame,
+        year(finalgame) - birthyear as Age_lastgame,
+        year(finalgame) - year(debut) as careerlength
+FROM	PLAYERS
+ORDER BY careerlength DESC;
+```
+![3.1Output](Images/3.1output.png)
+ ### 3.2 What team did each player play on for their starting and ending years?
+```sql
 
+```
+![3.2Output]()
+ ### 3.3 How many players started and ended on the same team and also played for over a decade?
+```sql
+
+```
+![3.3Output]()
 ## 4. SUMMARY STATS: How do player attributes compare
- 1.	Which players have the same birthday?
- 2.	Create a summary table that shows for each team, what percent of players bat right, left and both
- 3.	How have average height and weight at debut game changed over the years, and what's the decade-over-decade difference?
+ ### 4.1 Which players have the same birthday?
+```sql
+
+```
+![4.1Output]()
+ ### 4.2 Create a summary table that shows for each team, what percent of players bat right, left and both
+```sql
+
+```
+![4.2Output]()
+ ### 4.3 How have average height and weight at debut game changed over the years, and what's the decade-over-decade difference?
+ ```sql
+
+```
+![4.3Output]()
+ 
