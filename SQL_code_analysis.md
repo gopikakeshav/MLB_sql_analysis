@@ -104,7 +104,20 @@ WHERE	ranking <= 3
 ![2.1Output](Images/2.1output.png)
 
  ### 2.2 For each team, show the cumulative sum of spending over the years
-
+```sql
+ With cte_sal AS (
+ SELECT	teamid, yearid,  sum(salary) AS yearly_spend
+ FROM	salaries
+ GROUP BY teamid, yearid
+ ORDER BY teamid
+ )
+ 
+ SELECT teamid, yearid, yearly_spend,
+		ROUND(SUM(yearly_spend) OVER (PARTITION BY teamid ORDER BY yearid) / 1000000) as cummulative_spend_mil
+FROM cte_sal
+ORDER BY teamid, yearid
+```
+![2.2Output](Images/2.2output.png)
  
  ### 2.3 Return the first year that each team's cumulative spending surpassed 1 billion
 
