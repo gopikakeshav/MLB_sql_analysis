@@ -76,9 +76,39 @@ WHERE	ranking <= 3
 ![1.3Output](Images/1.3output.png)
 
 ## 2. SALARIES: How much do teams spend on Player salaries
- 1.	Return the top 20% of teams in terms of average annual spending
- 2.	For each team, show the cumulative sum of spending over the years
- 3.	 Return the first year that each team's cumulative spending surpassed 1 billion
+ ## 2.1 Return the top 20% of teams in terms of average annual spending
+ ```sql
+ With cte_sal AS (
+ SELECT	teamid, yearid,  sum(salary) AS yearly_spend
+ FROM	salaries
+ GROUP BY teamid, yearid
+ ORDER BY teamid
+ )
+ ,
+ cte_team AS (
+ SELECT teamid, round(AVG(yearly_spend)/1000000) as Avg_annual_spend_mil
+ FROM	cte_sal
+ GROUP BY teamid
+ ORDER BY Avg_annual_spend_mil desc
+ )
+ ,
+ cte_ranking as (
+ SELECT teamid, avg_annual_spend, 
+		NTILE(5) OVER (ORDER BY avg_annual_spend_mil DESC) as Percentile
+ FROM	cte_team
+ )
+ 
+ SELECT * FROM cte_ranking
+ WHERE percentile = 1
+```
+![2.1Output](Images/2.1output.png)
+
+ ### 2.2 For each team, show the cumulative sum of spending over the years
+
+ 
+ ### 2.3 Return the first year that each team's cumulative spending surpassed 1 billion
+
+ 
 
 ## 3. CAREER: What does each player's career look like
  1.	For each player, calculate their age at their first (debut) game, their last game, and their career length.
