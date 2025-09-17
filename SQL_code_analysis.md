@@ -2,7 +2,7 @@
 
 
 ## 1. SCHOOLS: What Schools do MLB Players attend
- ### 1.	In each decade, how many schools were there that produced MLB players?
+ ### 1.1 In each decade, how many schools were there that produced MLB players?
 ```sql
 WITH 	cte_decade AS (
 SELECT	yearID, schoolID, playerid,
@@ -20,7 +20,30 @@ ORDER BY decade;
 ![1.1Output](Images/1.1output.png)
 
  
- 2.	What are the names of the top 5 schools that produced the most players?
+ ### 1.2 What are the names of the top 5 schools that produced the most players?
+ ```sql
+with cte_school AS (
+				SELECT	schoolid, count(DISTINCT playerid) AS players
+				FROM	schools
+				GROUP BY schoolid
+				ORDER BY players desc
+				)
+,
+cte_ranking as (
+				SELECT schoolid, players,
+						RANK() OVER (order by players DESC) as ranking
+				FROM cte_school
+				)
+
+SELECT	a.schoolid, b.name_full as School_name, players
+FROM	cte_ranking a LEFT JOIN school_details b 
+		ON a.schoolid = b.schoolid
+WHERE	ranking <=5
+```
+
+![1.2Output](Images/1.2output.png)
+
+ 
  3.	For each decade, what were the names of the top 3 schools that produced the most players?
 
 ## 2. SALARIES: How much do teams spend on Player salaries
