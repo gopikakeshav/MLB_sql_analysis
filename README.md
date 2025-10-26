@@ -1,4 +1,5 @@
 # MLB Player Analysis 
+✦ Understanding Team spendings and Player statistics over the years(1890 - 2010).
 
 ## Objective:
 To demonstrate advanced SQL Querying techniques using the Major League Baseball dataset
@@ -10,7 +11,11 @@ MySQL
 Maven Analytics
 
 ## Business Problem:
-Courtesy: Maven Analytics
+`Courtesy: Maven Analytics`
+Use the vast database of player information to track how player stats have changed over time and across different teames in the league.
+
+## Analysis:
+Find it [here](SQL_code_analysis.md)
 
 Schools:
 1. In each decade, how many schools were there that produced MLB players?
@@ -31,9 +36,6 @@ MLB Summary Stats:
 1. Which players have the same birthday?
 2. Create a summary table that shows for each team, what percent of players bat right, left and both
 3. How have average height and weight at debut game changed over the years, and what's the decade-over-decade difference?
-
-## Analysis:
-Find it [here](SQL_code_analysis.md)
 
 ## Summary Of Findings:
 1. University of Texas, University of Southern California, Arizona State University, Stanford University, University of Michigan - Have produced the most players
