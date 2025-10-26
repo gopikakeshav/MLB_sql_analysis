@@ -1,5 +1,5 @@
 # MLB Player Analysis 
-✦ Understanding Team spendings and Player statistics over the years (1890 - 2010).
+## ✦ Understanding Team spendings and Player statistics over the years (1890 - 2010).
 
 ## Objective:
 To demonstrate advanced SQL Querying techniques using the Major League Baseball dataset
